@@ -12,6 +12,7 @@ namespace API_Animes_Pro.Data.Map
             builder.Property(x => x.Retorno).IsRequired();
             builder.Property(x => x.Acao).IsRequired();
             builder.Property(x => x.DataHora);
+            builder.Property(x => x.FiltrosLog);
         }
     }
 }

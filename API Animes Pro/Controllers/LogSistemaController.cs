@@ -38,13 +38,14 @@ namespace API_Animes_Pro.Controllers
             try
             {
                 var anime = await _logSistemaRepository.ChecarLogPorData(dataInicial, dataFinal);
-                await _logSistemaRepository.FazLog(Enums.EnumAcao.GetById, "Consulta ao Log Executada Com Sucesso!");
+                await _logSistemaRepository.FazLog(Enums.EnumAcao.GetByHours, "Consulta ao Log Executada Com Sucesso!", 
+                    $"Data Inicial: {dataInicial}, Data Final: {dataFinal}");
 
                 return Ok(anime);
             }
             catch(Exception ex)
             {
-                await _logSistemaRepository.FazLog(Enums.EnumAcao.GetById, ex.Message);
+                await _logSistemaRepository.FazLog(Enums.EnumAcao.GetByHours, ex.Message, $"Data Inicial: {dataInicial}, Data Final: {dataFinal}");
                 return BadRequest(ex.Message);
             }
 

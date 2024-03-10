@@ -33,11 +33,12 @@ namespace API_Animes_Pro.Repository
             return log;
         }
 
-        public async Task<LogSistemaModel> FazLog(EnumAcao acao, string retorno)
+        public async Task<LogSistemaModel> FazLog(EnumAcao acao, string retorno, string filtros = "")
         {
             var _log = new LogSistemaModel(){
                 Acao = acao,
-                Retorno = retorno
+                Retorno = retorno,
+                FiltrosLog = filtros
             };
 
             await _dbContext.LogSistema.AddAsync(_log);
