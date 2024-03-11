@@ -2,7 +2,7 @@
 
 namespace API_Animes_Pro.Enums
 {
-    public enum EnumAcao
+    public enum EnumAcao : short
     {
         [Description("Receber Todos Registros")]
         GetAll = 1,

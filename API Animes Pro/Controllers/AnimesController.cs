@@ -71,8 +71,8 @@ namespace API_Animes_Pro.Controllers
 
         }
 
-        [HttpGet("{Pagination}")]
-        public async Task<ActionResult<List<AnimesModel>>> Pagination(int page, int pageSize, string filter = "", string keyFilter = "Default")
+        [HttpGet("Pagination")]
+        public async Task<ActionResult<List<AnimesModel>>> Pagination(int page, int pageSize, string filter = "", string keyFilter = "")
         {
             try
             {

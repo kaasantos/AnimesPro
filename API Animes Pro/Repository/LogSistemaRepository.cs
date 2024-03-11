@@ -17,6 +17,7 @@ namespace API_Animes_Pro.Repository
         public async Task<List<LogSistemaModel>> GetAll()
         {
             var log = await _dbContext.LogSistema
+                .AsNoTracking()
                 .OrderBy(ls => ls.Id)
                 .ToListAsync();
 
@@ -27,6 +28,7 @@ namespace API_Animes_Pro.Repository
         {
             var log = await _dbContext.LogSistema
                 .Where(ls => ls.DataHora >= dataInicial && ls.DataHora <= dataFinal)
+                .AsNoTracking()
                 .OrderBy(ls => ls.Id)
                 .ToListAsync();
 
