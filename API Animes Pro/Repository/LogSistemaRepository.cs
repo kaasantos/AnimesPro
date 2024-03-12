@@ -18,24 +18,24 @@ namespace API_Animes_Pro.Repository
         {
             var log = await _dbContext.LogSistema
                 .AsNoTracking()
-                .OrderBy(ls => ls.Id)
+                .OrderByDescending(ls => ls.Id)
                 .ToListAsync();
 
             return log;
         }
 
-        public async Task<List<LogSistemaModel>> ChecarLogPorData(DateTime dataInicial, DateTime dataFinal)
+        public async Task<List<LogSistemaModel>> GetByInterval(DateTime dataInicial, DateTime dataFinal)
         {
             var log = await _dbContext.LogSistema
                 .Where(ls => ls.DataHora >= dataInicial && ls.DataHora <= dataFinal)
                 .AsNoTracking()
-                .OrderBy(ls => ls.Id)
+                .OrderByDescending(ls => ls.Id)
                 .ToListAsync();
 
             return log;
         }
 
-        public async Task<LogSistemaModel> FazLog(EnumAcao acao, string retorno, string filtros = "")
+        public async Task<LogSistemaModel> AddLog(EnumAcao acao, string retorno, string filtros = "")
         {
             var _log = new LogSistemaModel(){
                 Acao = acao,

@@ -1,3 +1,4 @@
+using API_Animes_Pro.Controllers;
 using API_Animes_Pro.Data;
 using API_Animes_Pro.Repository;
 using API_Animes_Pro.Repository.Interfaces;
@@ -20,10 +21,13 @@ namespace API_Animes_Pro
             DataBaseConfig.MigrationsDataBase.RunMigration(connection);
             builder.Services.AddEntityFrameworkSqlServer().AddDbContext<DBContext>(
                 options => options.UseSqlServer(connection)
-                ); ;
+                );
 
-            builder.Services.AddScoped<IAnimesRepository, AnimesRepository>();
-            builder.Services.AddScoped<ILogSistemaRepository, LogSistemaRepository>();
+            builder.Services.AddTransient<IAnimesRepository, AnimesRepository>();
+            builder.Services.AddTransient<ILogSistemaRepository, LogSistemaRepository>();
+
+            builder.Services.AddScoped<IAnimesService, AnimesService>();
+            builder.Services.AddScoped<ILogSistemaService, LogSistemaService>();
 
             var app = builder.Build();
 

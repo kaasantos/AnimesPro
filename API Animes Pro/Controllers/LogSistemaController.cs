@@ -6,49 +6,20 @@ namespace API_Animes_Pro.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
-    public class LogSistemaController : ControllerBase
+    public class LogSistemaController: ControllerBase
     {
-        private readonly ILogSistemaRepository _logSistemaRepository;
-
-        public LogSistemaController(ILogSistemaRepository logSistemaRepository)
-        {
-            _logSistemaRepository = logSistemaRepository;
-        }
-
         [HttpGet]
-        public async Task<ActionResult<List<LogSistemaModel>>> GetAll()
+        public async Task<IActionResult> ExibirTodosLogs([FromServices] ILogSistemaService service)
         {
-            try
-            {
-                var listaTodosAnimes = await _logSistemaRepository.GetAll();
-                await _logSistemaRepository.FazLog(Enums.EnumAcao.GetAll, "Consulta ao Log Executada Com Sucesso!");
-
-                return Ok(listaTodosAnimes);
-            }
-            catch(Exception ex)
-            {
-                await _logSistemaRepository.FazLog(Enums.EnumAcao.GetAll, ex.Message);
-                return BadRequest(ex.Message);
-            }
+            var retorno = await service.RecebeTodosLogs();
+            return Ok(retorno);
         }
 
         [HttpGet("ChecarLogPorData")]
-        public async Task<ActionResult<AnimesModel>> ChecarLogPorData(DateTime dataInicial, DateTime dataFinal)
+        public async Task<ActionResult<AnimesModel>> ChecarLogPorData([FromServices] ILogSistemaService service, DateTime dataInicial, DateTime dataFinal)
         {
-            try
-            {
-                var anime = await _logSistemaRepository.ChecarLogPorData(dataInicial, dataFinal);
-                await _logSistemaRepository.FazLog(Enums.EnumAcao.GetByHours, "Consulta ao Log Executada Com Sucesso!", 
-                    $"Data Inicial: {dataInicial}, Data Final: {dataFinal}");
-
-                return Ok(anime);
-            }
-            catch(Exception ex)
-            {
-                await _logSistemaRepository.FazLog(Enums.EnumAcao.GetByHours, ex.Message, $"Data Inicial: {dataInicial}, Data Final: {dataFinal}");
-                return BadRequest(ex.Message);
-            }
-
+            var retorno = await service.RecebeLogPorIntervaloDeHorario(dataInicial, dataFinal);
+            return Ok(retorno);
         }
     }
 }
