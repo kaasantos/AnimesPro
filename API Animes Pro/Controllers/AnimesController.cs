@@ -37,14 +37,14 @@ namespace API_Animes_Pro.Controllers
         }
 
         [HttpPost]
-        public async Task<IActionResult> Add([FromServices] IAnimesService service, AnimesModel anime)
+        public async Task<IActionResult> Add([FromServices] IAnimesService service, [FromBody] AnimesModel anime)
         {
             var _anime = await service.AdicionarAnime(anime);
             return Ok(_anime);
         }
 
         [HttpPut]
-        public async Task<IActionResult> Put([FromServices] IAnimesService service, AnimesModel anime)
+        public async Task<IActionResult> Put([FromServices] IAnimesService service, [FromBody] AnimesModel anime)
         {
             var _anime = await service.AtualizarAnimes(anime);
             return Ok(_anime);
