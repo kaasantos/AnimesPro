@@ -21,16 +21,13 @@ namespace API_Animes_Pro.Controllers
                 if(listaTodosLogs == null)
                     throw new Exception("Lista de logs não encontrada.");
 
-                if(listaTodosLogs.Count() == 0)
-                    throw new Exception("Nenhum log foi encontrado no sistema.");
-
                 await _logSistemaRepository.AddLog(Enums.EnumAcao.GetAll, "Consulta ao log executada com sucesso!");
                 return listaTodosLogs;
             }
             catch(Exception ex)
             {
                 await _logSistemaRepository.AddLog(Enums.EnumAcao.GetAll, ex.Message);
-                throw new Exception(ex.Message, ex);
+                throw new Exception(ex.Message);
             }
         }
 
@@ -38,13 +35,10 @@ namespace API_Animes_Pro.Controllers
         {
             try
             {
+                if(dataFinal < dataInicial)
+                    throw new Exception("Data inicial maior que a data final.");
+
                 var logsNoIntervalo = await _logSistemaRepository.GetByInterval(dataInicial, dataFinal);
-
-                if(logsNoIntervalo == null)
-                    throw new Exception("");
-
-                if (logsNoIntervalo.Count() == 0)
-                    throw new Exception("Nenhum log foi encontrado no sistema.");
 
                 await _logSistemaRepository.AddLog(Enums.EnumAcao.GetByHours, "Consulta ao log executada com sucesso!", 
                     $"Data Inicial: {dataInicial}, Data Final: {dataFinal}");
@@ -53,7 +47,7 @@ namespace API_Animes_Pro.Controllers
             catch(Exception ex)
             {
                 await _logSistemaRepository.AddLog(Enums.EnumAcao.GetByHours, ex.Message, $"Data Inicial: {dataInicial}, Data Final: {dataFinal}");
-                throw new Exception(ex.Message, ex);
+                throw new Exception(ex.Message);
             }
         }
     }

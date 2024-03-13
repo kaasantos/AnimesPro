@@ -1,5 +1,6 @@
 ﻿using API_Animes_Pro.Models;
 using API_Animes_Pro.Repository.Interfaces;
+using System.ComponentModel.DataAnnotations;
 
 namespace API_Animes_Pro.Controllers
 {
@@ -20,12 +21,6 @@ namespace API_Animes_Pro.Controllers
             {
                 var listaTodosAnimes = await _animesRepository.GetAll();
 
-                if (listaTodosAnimes == null)
-                    throw new Exception("Lista de animes não encontrada.");
-
-                if (listaTodosAnimes.Count() == 0)
-                    throw new Exception("Nenhum anime foi encontrado no sistema.");
-
                 await _geraLog.AddLog(Enums.EnumAcao.GetAll, "Requisição getAll executada.");
 
                 return listaTodosAnimes;
@@ -33,7 +28,7 @@ namespace API_Animes_Pro.Controllers
             catch(Exception ex) 
             {
                 await _geraLog.AddLog(Enums.EnumAcao.GetAll, ex.Message);
-                throw new Exception(ex.Message, ex);
+                throw new Exception(ex.Message);
             }
 
         }
@@ -56,7 +51,7 @@ namespace API_Animes_Pro.Controllers
             catch(Exception ex)
             {
                 await _geraLog.AddLog(Enums.EnumAcao.GetById, ex.Message, id.ToString());
-                throw new Exception(ex.Message, ex);
+                throw new Exception(ex.Message);
             }
 
         }
@@ -65,15 +60,10 @@ namespace API_Animes_Pro.Controllers
         {
             try
             {
-                if (string.IsNullOrWhiteSpace(chave))
-                    throw new Exception("Chave nula ou inválida.");
-
-                if (string.IsNullOrWhiteSpace(chave))
-                    throw new Exception("Filtro nulo ou inválido.");
+                if (string.IsNullOrWhiteSpace(chave) || string.IsNullOrWhiteSpace(filtro))
+                    throw new Exception("Chave ou filtro nulo.");
 
                 var animePorChave = await _animesRepository.GetByKey(chave, filtro);
-                if(animePorChave == null)
-                    throw new Exception("Nenhum anime encontrado.");
 
                 await _geraLog.AddLog(Enums.EnumAcao.GetByKey, "Anime listado por chave.", $"Chave: {chave}, Filtro: {filtro}");
 
@@ -82,7 +72,7 @@ namespace API_Animes_Pro.Controllers
             catch (Exception ex)
             {
                 await _geraLog.AddLog(Enums.EnumAcao.GetByKey, ex.Message, $"Chave: {chave}, Filtro: {filtro}");
-                throw new Exception(ex.Message, ex);
+                throw new Exception(ex.Message);
             }
 
         }
@@ -107,7 +97,7 @@ namespace API_Animes_Pro.Controllers
             {
                 await _geraLog.AddLog(Enums.EnumAcao.Pagination, ex.Message,
                   $"Pagina: {pagina}, Registros: {tamanho}, Filtro: {filtro}, Chave do Filtro: {chave}");
-                throw new Exception(ex.Message, ex);
+                throw new Exception(ex.Message);
             }
 
         }
@@ -116,11 +106,14 @@ namespace API_Animes_Pro.Controllers
         {
             try
             {
-                if (anime == null)
-                    throw new Exception("Objeto nulo ou inválido.");
-
                 if (anime.Id != 0)
                     throw new Exception("Id obrigatóriamente deve ser igual a 0.");
+
+                if(string.IsNullOrWhiteSpace(anime.Nome))
+                    throw new Exception("Nome do anime é obrigatório.");
+
+                if (string.IsNullOrWhiteSpace(anime.Diretor))
+                    throw new Exception("Nome do diretor é obrigatório.");
 
                 var _animeNome = await _animesRepository.GetByKey(anime.Nome, "nomes");
                 if (_animeNome.Count() > 0)
@@ -135,7 +128,7 @@ namespace API_Animes_Pro.Controllers
             catch (Exception ex)
             {
                 await _geraLog.AddLog(Enums.EnumAcao.Add, ex.Message, anime.Id.ToString());
-                throw new Exception(ex.Message, ex);
+                throw new Exception(ex.Message);
             }
         }
 
@@ -143,12 +136,20 @@ namespace API_Animes_Pro.Controllers
         {
             try
             {
-                if (anime == null)
-                    throw new Exception("Objeto nulo ou inválido.");
+                if (anime.Id == 0)
+                    throw new Exception("Id do anime deve ser maior que 0.");
+
+                if (string.IsNullOrWhiteSpace(anime.Nome))
+                    throw new Exception("Nome do anime é obrigatório.");
+
+                if (string.IsNullOrWhiteSpace(anime.Diretor))
+                    throw new Exception("Nome do diretor é obrigatório.");
 
                 var _checagemId = await _animesRepository.GetById(anime.Id);
                 if (_checagemId == null)
                     throw new Exception($"Anime: {anime.Id} não encontrado.");
+
+                Validator.ValidateObject(anime, new ValidationContext(anime), true);
 
                 var _checagemNome = await _animesRepository.GetByKey(anime.Nome, "nomes");
                 if (_checagemNome.Count() > 0)
@@ -168,7 +169,7 @@ namespace API_Animes_Pro.Controllers
             catch (Exception ex)
             {
                 await _geraLog.AddLog(Enums.EnumAcao.Update, ex.Message, anime.Id.ToString());
-                throw new Exception(ex.Message, ex);
+                throw new Exception(ex.Message);
             }
         }
 
@@ -191,7 +192,7 @@ namespace API_Animes_Pro.Controllers
             catch (Exception ex)
             {
                 await _geraLog.AddLog(Enums.EnumAcao.Delete, ex.Message, id.ToString());
-                throw new Exception(ex.Message, ex);
+                throw new Exception(ex.Message);
             }
         }
     }

@@ -3,7 +3,13 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 17
 VisualStudioVersion = 17.4.33213.308
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "API Animes Pro", "API Animes Pro.csproj", "{E69B316B-D6F1-4909-ABAC-43753421FFEE}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "API Animes Pro", "API Animes Pro.csproj", "{E69B316B-D6F1-4909-ABAC-43753421FFEE}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "src", "src", "{06FD6047-97C8-466E-89A5-D73F70FADB3B}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "tests", "tests", "{A0ACF08E-BA8B-4FFD-8A3E-17D9F121BEA1}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "API Animes Pro.Testes", "..\API Animes Pro.Testes\API Animes Pro.Testes.csproj", "{C9403C4B-03E3-471B-B644-C4BA70354CBA}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -15,9 +21,17 @@ Global
 		{E69B316B-D6F1-4909-ABAC-43753421FFEE}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{E69B316B-D6F1-4909-ABAC-43753421FFEE}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{E69B316B-D6F1-4909-ABAC-43753421FFEE}.Release|Any CPU.Build.0 = Release|Any CPU
+		{C9403C4B-03E3-471B-B644-C4BA70354CBA}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{C9403C4B-03E3-471B-B644-C4BA70354CBA}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{C9403C4B-03E3-471B-B644-C4BA70354CBA}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{C9403C4B-03E3-471B-B644-C4BA70354CBA}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(NestedProjects) = preSolution
+		{E69B316B-D6F1-4909-ABAC-43753421FFEE} = {06FD6047-97C8-466E-89A5-D73F70FADB3B}
+		{C9403C4B-03E3-471B-B644-C4BA70354CBA} = {A0ACF08E-BA8B-4FFD-8A3E-17D9F121BEA1}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {5042E1C1-2297-4ABF-B42C-429EBFF656A2}
