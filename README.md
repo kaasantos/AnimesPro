@@ -18,7 +18,10 @@ Esta é uma API RESTful para realizar operações CRUD (Create, Read, Update, De
    - **Atualizar um Anime Existente**
     - PUT /animes - Atualiza os detalhes de um anime existente.
    - **Remover um Anime**
-    - DELETE /animes/{id} - Remove um anime da coleção, identificado pelo seu ID.
+    - DELETE /animes/{id} - Remove um anime da coleção, identificado pelo seu ID.  
+- **Listar Logs** - GET /logSistema - Retorna uma lista de todos os logs registrados.
+- **Listar Logs em um Intervalo** - GET /logSistema/ChecarLogPorData - Retorna uma lista de todos os logs registrados dentor de um intervalo.
+
 
 ## Estrutura de Dados
  Um anime é representado por um objeto JSON com os seguintes campos:
@@ -41,3 +44,12 @@ Esta é uma API RESTful para realizar operações CRUD (Create, Read, Update, De
         "diretor" : "Masashi Kishimoto",
         "resumo": "Naruto Uzumaki é um jovem ninja que sonha em se tornar o Hokage, líder da sua vila, e ser reconhecido como o mais forte de todos."
     }
+
+## Banco de dados
+A aplicação foi projetada para criar automaticamente o banco de dados no SQL Server, caso o banco não seja detectado. Para configurar o banco de dados, siga estas etapas:
+   - **Adicionar Credenciais no appsettings.json:** Abra o arquivo appsettings.json na pasta Api Anime Pro e adicione as credenciais necessárias para se conectar ao SQL Server. Você encontrará um trecho semelhante ao destacado abaixo. Substitua "nomeDoServidor", "seuUsuario", "NomeDoUsuario" e "suaSenha" pelos detalhes da sua configuração do SQL Server.
+       - "DataBase": "Data Source=nomeDoServidor; Initial Catalog=DB_AnimesPro; User Id=seuUsuario; Password=suaSenha;TrustServerCertificate=True;"
+- **Executar a Aplicação:** Ao iniciar a aplicação, o sistema verificará se o banco de dados especificado já existe. Se não existir, será criado automaticamente com base nas credenciais fornecidas no appsettings.json.
+- **Confirmação da Criação do Banco de Dados:** Após a execução bem-sucedida da aplicação, você pode verificar no SQL Server Management Studio ou em qualquer outra ferramenta de gerenciamento de banco de dados se o banco de dados foi criado corretamente.
+- **Utilização da Aplicação:** Com o banco de dados devidamente configurado e criado, você pode agora utilizar a aplicação normalmente.
+
