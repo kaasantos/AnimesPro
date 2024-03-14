@@ -49,7 +49,7 @@ namespace API_Animes_Pro.Repository
             return await animes.ToListAsync();
         }
 
-        public async Task<List<AnimesModel>> Pagination(int page, int pageSize, string key = "", string filter = "Default")
+        public async Task<List<AnimesModel>> Pagination(int page, int pageSize, string key = "", string filter = "")
         {
             var paginacao = _dbContext.Animes
                 .Select(a => new AnimesModel
@@ -61,11 +61,7 @@ namespace API_Animes_Pro.Repository
                 })
                 .AsNoTracking();
 
-            if (!string.IsNullOrWhiteSpace(filter))
-                paginacao = FiltrarQuery(filter, key, paginacao);
-            else
-                paginacao = paginacao
-                    .OrderByDescending(a => a.Id);
+            paginacao = FiltrarQuery(filter, key, paginacao);
 
             paginacao = paginacao
                             .Skip((page - 1) * pageSize)

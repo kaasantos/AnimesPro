@@ -8,6 +8,11 @@ namespace API_Animes_Pro.Controllers
     [ApiController]
     public class AnimesController : ControllerBase
     {
+
+        /// <summary>
+        /// Lista todos os animes cadastrados no sistema.
+        /// </summary>
+        /// <returns>Lista de Animes.</returns>
         [HttpGet]
         public async Task<IActionResult> GetAll([FromServices] IAnimesService service)
         {
@@ -15,6 +20,13 @@ namespace API_Animes_Pro.Controllers
             return Ok(listaTodosAnimes);
         }
 
+        /// <summary>
+        /// Recebe um anime específico de acordo com o id.
+        /// </summary>
+        ///<remarks>
+        ///Condições: id maior que 0 e anime existir no sistema.
+        ///</remarks>
+        /// <returns>Anime</returns>
         [HttpGet("{id}")]
         public async Task<IActionResult> GetById([FromServices] IAnimesService service, int id)
         {
@@ -22,6 +34,14 @@ namespace API_Animes_Pro.Controllers
             return Ok(animePorId);
         }
 
+        /// <summary>
+        /// Recebe um ou mais registro de acordo com a chave e o filtro.
+        /// </summary>
+        /// <remarks>
+        /// Regras: filtros - 'nomes', 'diretor', 'resumo' e 'todos'. 
+        /// Condições:  chave e filtros não nulos.
+        /// </remarks>
+        /// <returns>Lista de animes</returns>
         [HttpGet("{key}/{filter}")]
         public async Task<IActionResult> GetByKey([FromServices] IAnimesService service, string key, string filter)
         {
@@ -29,6 +49,13 @@ namespace API_Animes_Pro.Controllers
             return Ok(animePorChave);
         }
 
+        /// <summary>
+        /// Registros paginados de acordo com as entradas.
+        /// </summary>
+        /// <remarks>
+        /// Condições: Page e pageSize devem ser maior que 0 e pageSize menor ou igual a 1000.
+        /// </remarks>
+        /// <returns>Lista de animes</returns>
         [HttpGet("Pagination")]
         public async Task<IActionResult> Pagination([FromServices] IAnimesService service, int page, int pageSize, string filter = "", string keyFilter = "")
         {
@@ -36,6 +63,13 @@ namespace API_Animes_Pro.Controllers
             return Ok(paginacao);
         }
 
+        /// <summary>
+        /// Adiciona um anime em específico.
+        /// </summary>
+        /// <remarks>
+        /// Condições: id igual a 0, diretor não nulo e nome do anime não nulo e diferente de um outro existente no sistema.
+        /// </remarks>
+        /// <returns>Anime adicionado</returns>
         [HttpPost]
         public async Task<IActionResult> Add([FromServices] IAnimesService service, [FromBody] AnimesModel anime)
         {
@@ -43,6 +77,13 @@ namespace API_Animes_Pro.Controllers
             return Ok(_anime);
         }
 
+        /// <summary>
+        /// Atualiza um anime específico.
+        /// </summary>
+        /// <remarks>
+        /// Condições: id igual maior que 0, nome do anime não nulo, nome do diretor não nulo, id do registro existir no sistema e não existir OUTRO anime no sistema com aquele nome cadastrado.
+        /// </remarks>
+        /// <returns>Anime atualizado</returns>
         [HttpPut]
         public async Task<IActionResult> Put([FromServices] IAnimesService service, [FromBody] AnimesModel anime)
         {
@@ -50,6 +91,13 @@ namespace API_Animes_Pro.Controllers
             return Ok(_anime);
         }
 
+        /// <summary>
+        /// Deleta um anime específico.
+        /// </summary>
+        /// <remarks>
+        /// Condições: id diferente de 0 e existir um anime com aquele id cadastrado no sistema.
+        /// </remarks>
+        /// <returns>Mensagem de confirmação</returns>
         [HttpDelete]
         public async Task<IActionResult> Delete([FromServices] IAnimesService service, int id)
         {

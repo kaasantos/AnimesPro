@@ -1,7 +1,7 @@
 ﻿using System.Data.Common;
 using System.Data.SqlClient;
 
-namespace DAP
+namespace API_Animes_Pro.Data.DataBaseConfig
 {
     public class SqlDapper
     {
@@ -16,7 +16,7 @@ namespace DAP
         public DbConnection GetConection()
         {
             conn = new SqlConnection(_conexao);
-            conn.Open();           
+            conn.Open();
             return conn;
         }
 
